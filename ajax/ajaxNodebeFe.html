@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Node JS 实例</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="../../lib/jquery-3.3.1.js"></script>
+
+    <script>
+        /*
+                                                                                                                                                                 
+                                                                                                                                                                //可用于检查出错函数的错误内容，一般使用$.get()和$.post()函数就可以了
+                                                                                                                                                                 
+                                                                                                                                                                $.ajax({
+                                                                                                                                                                 url: "http://127.0.0.1:8888/",
+                                                                                                                                                                 type: "GET",
+                                                                                                                                                                 dataType: "binary", //因为是调用nodeJS返回的json数据，所以必须使用binary类型
+                                                                                                                                                                 error: function(XMLHttpRequest, textStatus, errorThrown){
+                                                                                                                                                                 var s1=XMLHttpRequest;
+                                                                                                                                                                 var s2=textStatus;
+                                                                                                                                                                 var s3=errorThrown;
+                                                                                                                                                                 alert("error message : "+errorThrown.toString())
+                                                                                                                                                                 },
+                                                                                                                                                                 success: function(data){
+                                                                                                                                                                 $("#feeds").html(data);
+                                                                                                                                                                 var dataObj=eval('('+data+')');//转换为json对象
+                                                                                                                                                                 $("#id").html("编号："+dataObj.id);
+                                                                                                                                                                 $("#name").html("姓名："+dataObj.name);
+                                                                                                                                                                 $("#arg").html("年龄："+dataObj.arg);
+                                                                                                                                                                 $("span").html(dataObj.remark);
+                                                                                                                                                                  
+                                                                                                                                                                // alert( "Data is : " + data );
+                                                                                                                                                                 } 
+                                                                                                                                                                 
+                                                                                                                                                                }); 
+                                                                                                                                                                 
+                                                                                                                                                                */
+
+
+        //$.get("test.cgi", function(data){ alert("Data Loaded: " + data); }); //$.get函数形式结构
+        function svr() {
+            xmlhttp = new XMLHttpRequest();
+            var url = "validate?id=" + escape(target.value);
+            xmlhttp.open("GET", "http://localhost:8001/ajax", true);
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    string = xmlhttp.responseText;
+                    $("#feeds").html(string);
+                    var dataObj = eval('(' + string + ')'); //转换为json对象
+                    $("#id").html("编号：" + dataObj.id);
+                    $("#name").html("姓名：" + dataObj.name);
+                    $("#arg").html("年龄：" + dataObj.arg);
+                }
+
+
+            };
+            xmlhttp.send();
+        };
+
+        function Ajax() {
+            $.get("http://127.0.0.1:8888/" + new Date().getTime(), function(data) {
+                $("#feeds").html(data);
+                var dataObj = eval('(' + data + ')'); //转换为json对象
+                $("#id").html("编号：" + dataObj.id);
+                $("#name").html("姓名：" + dataObj.name);
+                $("#arg").html("年龄：" + dataObj.arg);
+
+                $("span").html(dataObj.remark);
+
+                //alert("Data Loaded: "+new Date().getTime()); 
+            });
+        };
+    </script>
+
+
+
+</head>
+
+<body>
+    <input type="button" value="Ajax Raw" onclick="svr();" />
+    <input type="button" value="Ajax提交" onclick="Ajax();" />
+    <div id="feeds"></div>
+    <div id=id></div>
+    <div id=name></div>
+    <div id=arg></div>
+
+    <span>ddddd</span>
+
+</body>
+
+</html>

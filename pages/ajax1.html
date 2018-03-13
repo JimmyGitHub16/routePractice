@@ -1,0 +1,33 @@
+<html>
+
+<head>
+    <title>the title</title>
+    <script type="text/javascript" src="../lib/jquery-3.3.1.js"></script>
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function() {
+            /*    $("#driver").click(function(event) {
+                $('#stage').load('../lib/result.html');
+            });
+        }); */
+            $("#driver").click(function(event) {
+                $.getJSON('../lib/result.json', function(jd) {
+                    $('#stage').html('<p> Name: ' + jd.name + '</p>');
+                    $('#stage').append('<p>Age : ' + jd.age + '</p>');
+                    $('#stage').append('<p> Sex: ' + jd.sex + '</p>');
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <p>Click on the button to load result.html file:</p>
+    <div id="stage" style="background-color:aquamarine;">
+        STAGE
+    </div>
+	<form action="/ajax1" method="GET">
+    <input type="submit" id="driver" value="Load Data" />
+	</form>
+</body>
+
+</html>

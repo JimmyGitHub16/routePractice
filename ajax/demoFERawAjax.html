@@ -1,0 +1,26 @@
+<h3>请填写下表</h3>
+<form>
+    <label>姓名：<input type="text" id="name" name="name" value="zyd317"></label>
+<br><br>
+    <input type="submit" value="提交">
+<br><br>
+    您的姓名是：<output id="output"></output>
+</form>
+<script>
+    var name = document.getElementById("name").value;
+    var output = document.getElementById("output");
+    //alert(name);
+    var xhr = new XMLHttpRequest();
+    xhr.open("get","http://localhost:8888/?name="+name,true);//把数据传到哪里？
+    xhr.onreadystatechange=function () {
+        if(xhr.readyState==4){
+            if(xhr.status>=200&&xhr.status<300||xhr.status==304){
+                console.log("您的名字是："+xhr.responseText);//从服务器得到的反馈文本
+                output.innerHTML=xhr.responseText;
+
+            }
+        }
+    };
+    //xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+    xhr.send();//表单必须要要格式化
+</script>
